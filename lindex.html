@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<style>
+body {
+  margin: 0;
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+#heart-container {
+  position: relative;
+  width: 90vmin;
+  height: 90vmin;
+  animation: pulse 2s infinite alternate;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+.small-heart {
+  position: absolute;
+  width: 3vmin;
+  height: 3vmin;
+  background: linear-gradient(45deg, red, #ff4d6d);
+  clip-path: polygon(50% 0%,61% 17%,79% 17%,85% 35%,100% 40%,85% 55%,50% 90%,15% 55%,0% 40%,15% 35%,21% 17%,39% 17%);
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.2s ease;
+}
+#floating-hearts {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.floating-heart {
+  position: absolute;
+  width: 2vmin;
+  height: 2vmin;
+  clip-path: polygon(50% 0%,61% 17%,79% 17%,85% 35%,100% 40%,85% 55%,50% 90%,15% 55%,0% 40%,15% 35%,21% 17%,39% 17%);
+  opacity: 0;
+  animation: sparkle 3s infinite, floatUp 8s linear infinite;
+}
+@keyframes sparkle {
+  0% { opacity: 0.1; transform: scale(0.5);}
+  50% { opacity: 1; transform: scale(1);}
+  100% { opacity: 0.1; transform: scale(0.5);}
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-50vmin) rotate(15deg); }
+  100% { transform: translateY(-100vmin) rotate(-15deg); }
+}
+#letter-L {
+  position: absolute;
+  font-size: 30vmin;
+  color: #ff69b4;
+  z-index: 2;
+  display: none;
+  text-shadow: 0 0 5px #ffb6c1,0 0 10px #ff69b4,0 0 15px #ff1493;
+  animation: glow 1.5s infinite alternate, pulseL 2s infinite alternate;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 5px #ffb6c1,0 0 10px #ff69b4,0 0 15px #ff1493; }
+  to { text-shadow: 0 0 15px #ffb6c1,0 0 30px #ff69b4,0 0 45px #ff1493; }
+}
+@keyframes pulseL {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+#message {
+  margin-top: 5vmin;
+  font-size: 6vmin;
+  font-weight: bold;
+  color: #ffb6c1;
+  text-align: center;
+  text-shadow: 0 0 5px #ffb6c1,0 0 10px #ff69b4,0 0 15px #ff1493,0 0 25px #ffc0cb;
+  animation: neonPulse 1.5s infinite alternate;
+}
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 5px #ffb6c1,0 0 10px #ff69b4,0 0 15px #ff1493,0 0 25px #ffc0cb; }
+  50% { text-shadow: 0 0 10px #ffb6c1,0 0 20px #ff69b4,0 0 30px #ff1493,0 0 50px #ffc0cb; }
+  100% { text-shadow: 0 0 5px #ffb6c1,0 0 10px #ff69b4,0 0 15px #ff1493,0 0 25px #ffc0cb; }
+}
+</style>
+</head>
+<body>
+
+<div id="heart-container"></div>
+<div id="floating-hearts"></div>
+<div id="letter-L">L</div>
+<div id="message">Happy Birthday My Love ❤️</div>
+<audio id="bg-music" src="https://cdn.jsdelivr.net/gh/sehsour/sound-s7@b40177add941f515eb5ab7256f7c48a8299a6c32/تملى%20بشتاقلك%20%20_%D8%A7%D9%84%D8%B9%D8%B1%D9%8A%D8%B4%20_%D8%A8%D8%AD%D8%B1_%D8%A7%D9%84%D8%B9%D8%B1%D9%8A%D8%B4%20_%D8%B3%D9%8A%D9%86%D8%A7%D8%A1%20_%D8%B9%D9%85%D8%B1%D9%88_%D8%AF%D9%8A%D8%A7%D8%A8%20_%D8%A8%D8%AD%D8%B1%20_%D8%A7%D9%83%D8%B3%D8%A8%D9%84%D9%88%D8%B1explore%20_%D8%AD%D8%A8%20_%D8%B9%D8%A7%D8%B4%D9%82%20_%D8%AC%D8%A8%D8%B1%D8%A7%D8%AA%D8%AA%F0%9F%93%AE(M.mp3" autoplay loop></audio>
+
+<script>
+const bgMusic = document.getElementById("bg-music");
+function heartFunction(t) {
+    return {
+        x: 16 * Math.pow(Math.sin(t), 3),
+        y: 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)
+    };
+}
+const container = document.getElementById('heart-container');
+const message = document.getElementById('message');
+const floatingContainer = document.getElementById('floating-hearts');
+const letterL = document.getElementById('letter-L');
+
+let numHearts = 250;
+let hearts = [];
+
+for(let i=0; i<numHearts; i++){
+    const h = document.createElement('div');
+    h.classList.add('small-heart');
+    container.appendChild(h);
+    hearts.push(h);
+}
+let t = 0;
+let index = 0;
+
+function isInsideL(x, y){
+    return (x > -5 && x < -4 && y > -8 && y < 8) ||
+           (y > 6 && y < 7 && x > -5 && x < 2);
+}
+
+function animate() {
+    if(index < hearts.length){
+        t += 0.03;
+        const pos = heartFunction(t);
+        if(!isInsideL(pos.x, pos.y)){
+            const h = hearts[index];
+            h.style.left = `${(pos.x + 16)/32*100}%`;
+            h.style.top = `${(-pos.y + 16)/32*100}%`;
+            h.style.opacity = 1;
+            h.style.transform = 'scale(1)';
+            index++;
+        }
+        requestAnimationFrame(animate);
+    } else {
+        letterL.style.display = 'block';
+        setTimeout(()=>{ letterL.style.opacity = 1; }, 50);
+        message.style.opacity = 1;
+    }
+}
+function createFloatingHearts(){
+    setInterval(()=>{
+        for(let i=0; i<2; i++){
+            const fh = document.createElement('div');
+            fh.classList.add('floating-heart');
+            fh.style.backgroundColor = Math.random() > 0.5 ? 'rgba(255,182,193,0.6)' : 'rgba(255,0,0,0.6)';
+            fh.style.left = `${Math.random()*100}%`;
+            fh.style.top = `100%`;
+            floatingContainer.appendChild(fh);
+            let pos = 100;
+            const interval = setInterval(()=>{
+                pos -= 0.1 + Math.random()*0.1;
+                fh.style.top = pos + '%';
+                if(pos < -5){
+                    fh.remove();
+                    clearInterval(interval);
+                }
+            }, 30);
+        }
+    }, 200);
+}
+document.body.addEventListener('click', () => {
+  bgMusic.play();
+}, {once: true});
+createFloatingHearts();
+animate();
+</script>
+</body>
+</html>
